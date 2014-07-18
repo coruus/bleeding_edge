@@ -1,0 +1,27 @@
+# Copyright (c) 2014, the Dart project authors.  Please see the AUTHORS file
+# for details. All rights reserved. Use of this source code is governed by a
+# BSD-style license that can be found in the LICENSE file.
+
+# Try Dart is tested on the following configurations:
+# dart2js-drt (Content Shell --dump-render-tree)
+# dart2js-chrome
+# dart2js-ff (Firefox)
+[ $compiler != dart2js || ($runtime != drt && $runtime != chrome && $runtime != ff && $runtime != safari) ]
+web/*: Skip
+
+[ $compiler == dart2js && $runtime == drt ]
+web/end_to_end_test: Fail, Pass # https://code.google.com/p/v8/issues/detail?id=3347
+
+[ $csp ]
+web/end_to_end_test: Fail, OK # http://dartbug.com/17935
+
+[ $runtime == safari ]
+web/cursor_position_test: Fail # http://dartbug.com/19836
+
+[ $browser ]
+poi/poi_test: SkipByDesign # Uses dart:io.
+poi/poi_find_test: SkipByDesign # Uses dart:io.
+poi/serialize_test: SkipByDesign # Uses dart:io.
+
+[ $compiler == dart2js ]
+poi/*: Skip # http://dartbug.com/20031

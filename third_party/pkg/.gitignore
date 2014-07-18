@@ -1,0 +1,11 @@
+# Don't ignore things in pkg folder
+!*
+
+barback-*
+petitparser
+
+packages
+pubspec.lock
+.project
+.children
+out

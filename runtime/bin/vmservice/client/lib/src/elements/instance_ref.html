@@ -1,0 +1,90 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="curly_block.html">
+<link rel="import" href="observatory_element.html">
+<link rel="import" href="service_ref.html">
+
+<polymer-element name="instance-ref" extends="service-ref">
+  <template>
+    <link rel="stylesheet" href="css/shared.css">
+    <style>
+      .errorBox {
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-family: consolas, courier, monospace;
+        font-size: 1em;
+        line-height: 1.2em;
+        white-space: pre;
+      }
+    </style>
+    <span>
+      <template if="{{ isError(ref.serviceType) }}">
+        <pre class="errorBox">{{ ref.message }}</pre>
+      </template>
+
+      <template if="{{ isUnexpected(ref.serviceType) }}">
+        unexpected reference type &lt;{{ ref.serviceType }}&gt;
+      </template>
+
+      <template if="{{ isNull(ref.serviceType) }}">
+        <div title="{{ hoverText }}">{{ ref['valueAsString'] }}</div>
+      </template>
+
+      <template if="{{ (isString(ref.serviceType) ||
+                        isBool(ref.serviceType) ||
+                        isInt(ref.serviceType)) ||
+                        isDouble(ref.serviceType)) }}">
+        <a on-click="{{ goto }}" href="{{ url }}">{{ ref['valueAsString'] }}</a>
+      </template>
+
+      <template if="{{ (isType(ref.serviceType)) }}">
+        <a on-click="{{ goto }}" href="{{ url }}">{{ ref['user_name'] }}</a>
+      </template>
+
+      <template if="{{ isInstance(ref.serviceType) &&
+                       ref['closureFunc'] != null}}">
+        <a on-click="{{ goto }}" href="{{ url }}">
+          <!-- TODO(turnidge): Switch this to fully-qualified function -->
+          {{ ref['closureFunc'].name }}
+        </a>
+      </template>
+
+      <template if="{{ isInstance(ref.serviceType) &&
+                       ref['closureFunc'] == null}}">
+        <a on-click="{{ goto }}" href="{{ url }}"><em>{{ ref['class'].name }}</em></a>
+        <curly-block callback="{{ expander() }}">
+          <div class="memberList">
+            <template repeat="{{ field in ref['fields'] }}">
+              <div class="memberItem">
+                <div class="memberName">
+                  {{ field['decl']['user_name'] }}
+                </div>
+                <div class="memberValue">
+                  <instance-ref ref="{{ field['value'] }}"></instance-ref>
+                </div>
+              </div>
+            </template>
+          </div>
+        </curly-block>
+      </template>
+
+      <template if="{{ isList(ref.serviceType) }}">
+        <a on-click="{{ goto }}" href="{{ url }}"><em>{{ ref['class'].name }}</em> ({{ ref['length']}})</a>
+        <curly-block callback="{{ expander() }}">
+          <div class="memberList">
+            <template repeat="{{ element in ref['elements'] }}">
+              <div class="memberItem">
+                <div class="memberName">[{{ element['index']}}]</div>
+                <div class="memberValue">
+                  <instance-ref ref="{{ element['value'] }}"></instance-ref>
+                </div>
+              </div>
+            </template>
+          </div>
+        </curly-block>
+      </template>
+    </span>
+  </template>
+</polymer-element>
+
+<script type="application/dart" src="instance_ref.dart"></script>
