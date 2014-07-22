@@ -2327,6 +2327,27 @@ class _Int32x4 implements Int32x4 {
   Int32x4 operator -(Int32x4 other) {
     return _sub(other);
   }
+  Int32x4 _shiftLeft(int shift) native "Int32x4_shiftLeft";
+  Int32x4 shiftLeft(int shift) {
+    return _shiftLeft(shift);
+  }
+  Int32x4 operator <<(int shift) {
+    return _shiftLeft(shift);
+  }
+  Int32x4 _shiftRightLogical(int shift) native "Int32x4_shiftRightLogical";
+  Int32x4 shiftRightLogical(int shift) {
+    return _shiftRightLogical(shift);
+  }
+  Int32x4 operator >>(int shift) {
+    return _shiftRightLogical(shift);
+  }
+  Int32x4 _shiftRightArithmetic(int shift) native "Int32x4_shiftRightArithmetic";
+  Int32x4 shiftRightArithmetic(int shift) {
+    return _shiftRightArithmetic(shift);
+  }
+  Int32x4 shiftRight(int shift) {
+    return _shiftRightLogical(shift);
+  }
   Int32x4 _sub(Int32x4 other) native "Int32x4_sub";
   int get x native "Int32x4_getX";
   int get y native "Int32x4_getY";

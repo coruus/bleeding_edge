@@ -492,6 +492,39 @@ DEFINE_NATIVE_ENTRY(Int32x4_sub, 2) {
   return Int32x4::New(_x, _y, _z, _w);
 }
 
+DEFINE_NATIVE_ENTRY(Int32x4_shiftLeft, 2) {
+  GET_NON_NULL_NATIVE_ARGUMENT(Int32x4, self, arguments->NativeArgAt(0));
+  GET_NON_NULL_NATIVE_ARGUMENT(Integer, shift, arguments->NativeArgAt(1));
+  uint64_t s = (uint64_t)shift.AsInt64Value() & 31;
+  int32_t _x = s ? (int32_t)((uint32_t)self.x() << s) : self.x();
+  int32_t _y = s ? (int32_t)((uint32_t)self.y() << s) : self.y();
+  int32_t _z = s ? (int32_t)((uint32_t)self.z() << s) : self.z();
+  int32_t _w = s ? (int32_t)((uint32_t)self.w() << s) : self.w();
+  return Int32x4::New(_x, _y, _z, _w);
+}
+
+DEFINE_NATIVE_ENTRY(Int32x4_shiftRightLogical, 2) {
+  GET_NON_NULL_NATIVE_ARGUMENT(Int32x4, self, arguments->NativeArgAt(0));
+  GET_NON_NULL_NATIVE_ARGUMENT(Integer, shift, arguments->NativeArgAt(1));
+  uint64_t s = (uint64_t)shift.AsInt64Value() & 31;
+  int32_t _x = s ? (int32_t)((uint32_t)self.x() >> s) : self.x();
+  int32_t _y = s ? (int32_t)((uint32_t)self.y() >> s) : self.y();
+  int32_t _z = s ? (int32_t)((uint32_t)self.z() >> s) : self.z();
+  int32_t _w = s ? (int32_t)((uint32_t)self.w() >> s) : self.w();
+  return Int32x4::New(_x, _y, _z, _w);
+}
+
+DEFINE_NATIVE_ENTRY(Int32x4_shiftRightArithmetic, 2) {
+  GET_NON_NULL_NATIVE_ARGUMENT(Int32x4, self, arguments->NativeArgAt(0));
+  GET_NON_NULL_NATIVE_ARGUMENT(Integer, shift, arguments->NativeArgAt(1));
+  uint64_t s = (uint64_t)shift.AsInt64Value() & 31;
+  // TODO(dlg): Is this undefined behavior in C++11?
+  int32_t _x = s ? ((int32_t)self.x() >> s) : self.x();
+  int32_t _y = s ? ((int32_t)self.y() >> s) : self.y();
+  int32_t _z = s ? ((int32_t)self.z() >> s) : self.z();
+  int32_t _w = s ? ((int32_t)self.w() >> s) : self.w();
+  return Int32x4::New(_x, _y, _z, _w);
+}
 
 DEFINE_NATIVE_ENTRY(Int32x4_getX, 1) {
   GET_NON_NULL_NATIVE_ARGUMENT(Int32x4, self, arguments->NativeArgAt(0));

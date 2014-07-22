@@ -1286,6 +1286,10 @@ int DisassemblerX64::TwoByteOpcodeInstruction(uint8_t* data) {
           mnemonic = "ucomisd";
         } else if (opcode == 0x2F) {
           mnemonic = "comisd";
+        } else if (opcode == 0xF1) {
+          mnemonic = "psllw";
+        } else if (opcode == 0xD1) {
+          mnemonic = "psrlw";
         } else if (opcode == 0xFE) {
           mnemonic = "paddd";
         } else if (opcode == 0xFA) {

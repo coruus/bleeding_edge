@@ -4531,24 +4531,13 @@ void BinaryInt32x4OpInstr::EmitNativeCode(FlowGraphCompiler* compiler) {
   XmmRegister right = locs()->in(1).fpu_reg();
   ASSERT(left == locs()->out(0).fpu_reg());
   switch (op_kind()) {
-    case Token::kBIT_AND: {
-      __ andps(left, right);
-      break;
-    }
-    case Token::kBIT_OR: {
-      __ orps(left, right);
-      break;
-    }
-    case Token::kBIT_XOR: {
-      __ xorps(left, right);
-      break;
-    }
-    case Token::kADD:
-      __ addpl(left, right);
-      break;
-    case Token::kSUB:
-      __ subpl(left, right);
-      break;
+    case Token::kBIT_AND: __ andps(left, right); break;
+    case Token::kBIT_OR:  __ orps(left, right);  break;
+    case Token::kBIT_XOR: __ xorps(left, right); break;
+    case Token::kADD:     __ addpl(left, right); break;
+    case Token::kSUB:     __ subpl(left, right); break;
+    case Token::kSHL:     __ psllw(left, right); break;
+    case Token::kSHR:     __ psrlw(left, right); break;
     default: UNREACHABLE();
   }
 }

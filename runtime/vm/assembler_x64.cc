@@ -1286,6 +1286,45 @@ void Assembler::andpd(XmmRegister dst, const Address& src) {
   EmitOperand(dst & 7, src);
 }
 
+void Assembler::psllw(XmmRegister dst, XmmRegister src) {
+  ASSERT(dst <= XMM15);
+  AssemblerBuffer::EnsureCapacity ensured(&buffer_);
+  EmitUint8(0x66);
+  EmitREX_RB(dst, src);
+  EmitUint8(0x0f);
+  EmitUint8(0xf1);
+  EmitXmmRegisterOperand(dst & 7, src);
+}
+
+void Assembler::psllw(XmmRegister dst, const Address& src) {
+  ASSERT(dst <= XMM15);
+  AssemblerBuffer::EnsureCapacity ensured(&buffer_);
+  EmitUint8(0x66);
+  EmitREX_RB(dst, src);
+  EmitUint8(0x0f);
+  EmitUint8(0xf1);
+  EmitOperand(dst & 7, src);
+}
+
+void Assembler::psrlw(XmmRegister dst, XmmRegister src) {
+  ASSERT(dst <= XMM15);
+  AssemblerBuffer::EnsureCapacity ensured(&buffer_);
+  EmitUint8(0x66);
+  EmitREX_RB(dst, src);
+  EmitUint8(0x0f);
+  EmitUint8(0xd1);
+  EmitXmmRegisterOperand(dst & 7, src);
+}
+
+void Assembler::psrlw(XmmRegister dst, const Address& src) {
+  ASSERT(dst <= XMM15);
+  AssemblerBuffer::EnsureCapacity ensured(&buffer_);
+  EmitUint8(0x66);
+  EmitREX_RB(dst, src);
+  EmitUint8(0x0f);
+  EmitUint8(0xd1);
+  EmitOperand(dst & 7, src);
+}
 
 void Assembler::cvtsi2sd(XmmRegister dst, Register src) {
   AssemblerBuffer::EnsureCapacity ensured(&buffer_);

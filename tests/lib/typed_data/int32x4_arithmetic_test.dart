@@ -91,9 +91,51 @@ testSub() {
   Expect.equals(1, o.w);
 }
 
+testShift() {
+  var m = new Int32x4(1, 1, 1, 1);
+  var n = m << 3;
+  Expect.equals(8, n.x);
+  Expect.equals(8, n.y);
+  Expect.equals(8, n.z);
+  Expect.equals(8, n.w);
+  var o = m << 32;
+  Expect.equals(o.x, m.x);
+  Expect.equals(o.y, m.y);
+  Expect.equals(o.z, m.z);
+  Expect.equals(o.w, m.w);
+
+  o = n >> 3;
+  Expect.equals(1, o.x);
+  Expect.equals(1, o.y);
+  Expect.equals(1, o.z);
+  Expect.equals(1, o.w);
+
+  o = n >> 4;
+  Expect.equals(0, o.x);
+  Expect.equals(0, o.y);
+  Expect.equals(0, o.z);
+  Expect.equals(0, o.w);
+
+  var p = new Int32x4(1, 1, 1, 1);
+  p = p << 30;
+  var i = 1;
+  i = i << 30;
+  Expect.equals(i, p.x);
+  Expect.equals(i, p.y);
+  Expect.equals(i, p.z);
+  Expect.equals(i, p.w);
+
+  m = (m | n) >> 32;
+  Expect.equals(0, o.x);
+  Expect.equals(0, o.y);
+  Expect.equals(0, o.z);
+  Expect.equals(0, o.w);
+}
+
 main() {
   for (int i = 0; i < 20; i++) {
     testAdd();
     testSub();
+    testShift();
   }
 }

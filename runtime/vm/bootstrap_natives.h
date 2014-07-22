@@ -266,6 +266,9 @@ namespace dart {
   V(Int32x4_xor, 2)                                                            \
   V(Int32x4_add, 2)                                                            \
   V(Int32x4_sub, 2)                                                            \
+  V(Int32x4_shiftRightArithmetic, 2)                                           \
+  V(Int32x4_shiftRightLogical, 2)                                              \
+  V(Int32x4_shiftLeft, 2)                                                      \
   V(Int32x4_getX, 1)                                                           \
   V(Int32x4_getY, 1)                                                           \
   V(Int32x4_getZ, 1)                                                           \
@@ -289,7 +292,7 @@ namespace dart {
   V(Isolate_mainPort, 0)                                                       \
   V(Isolate_spawnFunction, 1)                                                  \
   V(Isolate_spawnUri, 1)                                                       \
-  V(Isolate_sendOOB, 2)                                                       \
+  V(Isolate_sendOOB, 2)                                                        \
   V(Mirrors_evalInLibraryWithPrivateKey, 2)                                    \
   V(Mirrors_makeLocalClassMirror, 1)                                           \
   V(Mirrors_makeLocalTypeMirror, 1)                                            \

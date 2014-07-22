@@ -605,6 +605,12 @@ class Assembler : public ValueObject {
 
   void andpd(XmmRegister dst, const Address& src);
 
+  void psllw(XmmRegister dst, const Address& src);
+  void psllw(XmmRegister dst, XmmRegister src);
+
+  void psrlw(XmmRegister dst, const Address& src);
+  void psrlw(XmmRegister dst, XmmRegister src);
+
   void fldl(const Address& src);
   void fstpl(const Address& dst);
 

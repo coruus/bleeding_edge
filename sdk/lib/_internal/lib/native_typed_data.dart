@@ -1720,6 +1720,24 @@ class NativeInt32x4 implements Int32x4 {
                                         JS("int", "# ^ #", w, other.w));
   }
 
+  // Right logical shift.
+  Int32x4 operator>>(int shift) {
+    return new NativeInt32x4._truncated(JS("int", "# >> #", x, shift),
+                                        JS("int", "# >> #", y, shift),
+                                        JS("int", "# >> #", z, shift),
+                                        JS("int", "# >> #", w, shift));
+  }
+
+  // Left logical shift.
+  Int32x4 operator<<(int shift) {
+    return new NativeInt32x4._truncated(JS("int", "# << #", x, shift),
+
+                                        JS("int", "# << #", y, shift),
+                                        JS("int", "# << #", z, shift),
+                                        JS("int", "# << #", w, shift));
+  }
+
+
   Int32x4 operator+(Int32x4 other) {
     // Avoid going through the typed array by "| 0" the result.
     return new NativeInt32x4._truncated(JS("int", "(# + #) | 0", x, other.x),
